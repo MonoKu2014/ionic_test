@@ -1,0 +1,16 @@
+ion-button{
+    --background: #062f77;
+}
+
+ion-content{
+    --background: #fff url('../../../assets/images/cover.png') no-repeat center / cover;
+}
+
+ion-item {
+    --background: transparent !important;
+}
+
+.button-disabled {
+    background: #062f77 !important;
+    opacity: 0.9;
+}
