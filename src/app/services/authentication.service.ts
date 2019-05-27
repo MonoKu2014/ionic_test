@@ -42,10 +42,9 @@ export class AuthenticationService {
     .toPromise()
     .then(res => {
       return res as any;
+    }, (error: any) => {
+      console.log(error);
     });
-    /*return this.storage.set(TOKEN_KEY, 'Bearer 1234567').then(() => {
-      this.authenticationState.next(true);
-    });*/
   }
 
   logout() {
