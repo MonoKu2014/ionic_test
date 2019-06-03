@@ -1,10 +1,24 @@
 <app-header></app-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <div class="ion-padding header-content">
+    <ion-searchbar placeholder="Qué estás buscando?"></ion-searchbar>
   </div>
+
+  <h1 class="ion-text-center">Servicios Destacados</h1>
+
+    <ion-card *ngFor="let service of goldServices">
+      <img src="https://img.mobiscroll.com/demos/card_2.png">
+      <ion-card-header>
+        <ion-card-subtitle>{{ service.sector }}</ion-card-subtitle>
+        <ion-card-title>{{ service.enterprise }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+          {{ service.description }}
+      </ion-card-content>
+    </ion-card>
+
 </ion-content>
 
 
