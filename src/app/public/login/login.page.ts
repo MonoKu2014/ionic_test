@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
-import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
+import { LoadingController } from '@ionic/angular';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -15,38 +15,41 @@ export class LoginPage implements OnInit {
 
   public email: string;
   public password: string;
+  public loading: any;
 
   constructor(
     private authService: AuthenticationService,
     private router: Router,
     private storage: Storage,
-    private spinnerDialog: SpinnerDialog
+    public loadingControl: LoadingController
   ) { }
 
   ngOnInit() {
-    // saltar login en dev
-    if (this.storage.get(TOKEN_KEY)) {
-      this.router.navigate(['home']);
-    }
+    this.loadingControl.create({
+      message: 'Ingresando...'
+    }).then((res) => {
+      this.loading = res;
+    });
   }
 
   login() {
-    // this.spinnerDialog.show('title', 'message', false);
+    this.loading.present();
     this.authService.login(this.email, this.password).then(response => {
         if (response.access_token) {
           this.storage.set(TOKEN_KEY, response.access_token).then(() => {
             this.authService.authenticationState.next(true);
           });
           this.authService.authenticationState.subscribe(state => {
-            // this.spinnerDialog.hide();
             if (state) {
+              this.loading.dismiss();
               this.router.navigate(['home']);
             } else {
+              this.loading.dismiss();
               this.router.navigate(['login']);
             }
           });
         } else {
-          // this.spinnerDialog.hide();
+          this.loading.dismiss();
           this.router.navigate(['login']);
         }
     });
